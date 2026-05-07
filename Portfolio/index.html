@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thierry Florent — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+[data-theme="dark"] {
+  --bg:        #0e0e12;
+  --bg2:       #13131a;
+  --bg3:       #1c1c26;
+  --card:      #17171f;
+  --card2:     #1e1e2a;
+  --border:    rgba(255,255,255,0.06);
+  --border2:   rgba(255,255,255,0.12);
+  --text:      #eeeef4;
+  --text2:     #8888a0;
+  --text3:     #44445a;
+  --accent:    #e8613a;
+  --accent2:   #f0a050;
+  --accent3:   #5bc8a0;
+  --blue:      #6080f5;
+  --hw:        #f0a050;
+  --hw-bg:     rgba(240,160,80,0.1);
+  --sw-bg:     rgba(96,128,245,0.1);
+  --nav-bg:    rgba(14,14,18,0.88);
+  --glow:      rgba(232,97,58,0.12);
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.3);
+  --shadow:    0 12px 48px rgba(0,0,0,0.5);
+  --shadow-lg: 0 24px 80px rgba(0,0,0,0.6);
+}
+
+[data-theme="light"] {
+  --bg:        #f2ede6;
+  --bg2:       #ebe5dc;
+  --bg3:       #e0d8cc;
+  --card:      #faf7f2;
+  --card2:     #f5f0e8;
+  --border:    rgba(80,60,40,0.1);
+  --border2:   rgba(80,60,40,0.18);
+  --text:      #1e1812;
+  --text2:     #6a5e50;
+  --text3:     #b0a090;
+  --accent:    #c94e28;
+  --accent2:   #c07820;
+  --accent3:   #2a9470;
+  --blue:      #3a5cd0;
+  --hw:        #c07820;
+  --hw-bg:     rgba(192,120,32,0.1);
+  --sw-bg:     rgba(58,92,208,0.08);
+  --nav-bg:    rgba(242,237,230,0.9);
+  --glow:      rgba(201,78,40,0.08);
+  --shadow-sm: 0 2px 12px rgba(80,60,40,0.1);
+  --shadow:    0 12px 48px rgba(80,60,40,0.15);
+  --shadow-lg: 0 24px 80px rgba(80,60,40,0.2);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background .35s, color .35s;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 999; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: .5;
+}
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2.5rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  transition: background .35s;
+}
+
+.nav-logo {
+  font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700;
+  color: var(--text); text-decoration: none; letter-spacing: -0.02em;
+}
+.nav-logo em { color: var(--accent); font-style: italic; }
+
+nav ul { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
+nav a { color: var(--text2); text-decoration: none; font-size: .85rem; transition: color .2s; }
+nav a:hover { color: var(--text); }
+
+.theme-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: .82rem;
+  padding: 5px 12px 5px 6px; border-radius: 100px; cursor: pointer; transition: all .2s;
+}
+.theme-btn:hover { color: var(--text); border-color: var(--accent); }
+.theme-dot {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); display: flex; align-items: center;
+  justify-content: center; font-size: .75rem; flex-shrink: 0;
+}
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding-top: 80px; position: relative; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 40%, var(--glow), transparent),
+    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(96,128,245,.06), transparent);
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'DM Mono', monospace; font-size: .75rem; letter-spacing: .1em;
+  color: var(--accent); margin-bottom: 1.5rem;
+  animation: up .6s ease both;
+}
+.hero-tag::before { content: '//'; color: var(--text3); }
+
+h1 {
+  font-family: 'Fraunces', serif; font-weight: 700;
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  line-height: .98; letter-spacing: -0.03em; margin-bottom: 1rem;
+  animation: up .6s .1s ease both;
+}
+h1 .italic { font-style: italic; color: var(--accent); font-weight: 300; }
+
+.hero-sub {
+  font-size: 1.05rem; color: var(--text2); max-width: 500px;
+  line-height: 1.8; margin-bottom: 2.5rem;
+  animation: up .6s .2s ease both;
+}
+.hero-sub strong { color: var(--text); font-weight: 500; }
+
+.hero-btns { display: flex; gap: .9rem; flex-wrap: wrap; animation: up .6s .3s ease both; }
+
+.btn-fill {
+  background: var(--accent); color: #fff;
+  padding: .78rem 1.8rem; border-radius: 8px;
+  text-decoration: none; font-weight: 500; font-size: .92rem;
+  transition: all .2s; border: 1.5px solid var(--accent);
+}
+.btn-fill:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,97,58,.35); }
+
+.btn-ghost {
+  background: transparent; color: var(--text2);
+  padding: .78rem 1.8rem; border-radius: 8px;
+  text-decoration: none; font-weight: 400; font-size: .92rem;
+  transition: all .2s; border: 1.5px solid var(--border2);
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--accent); transform: translateY(-2px); }
+
+.hero-card {
+  background: var(--card); border: 1px solid var(--border2);
+  border-radius: 20px; padding: 2rem 1.8rem;
+  animation: up .6s .25s ease both; box-shadow: var(--shadow); min-width: 220px;
+}
+.hero-card-stat { margin-bottom: 1.4rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--border); }
+.hero-card-stat:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.hcs-num { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 700; line-height: 1; color: var(--accent); display: block; }
+.hcs-label { font-size: .78rem; color: var(--text3); letter-spacing: .05em; margin-top: 2px; }
+
+/* ── SECTIONS ── */
+section { padding: 6.5rem 0; }
+
+.s-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .73rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .7rem; display: flex; align-items: center; gap: 10px;
+}
+.s-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border2); max-width: 60px; }
+
+.s-title {
+  font-family: 'Fraunces', serif; font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: .9rem;
+}
+
+.s-sub { color: var(--text2); font-size: .98rem; max-width: 520px; margin-bottom: 3rem; line-height: 1.75; }
+
+/* ── ABOUT ── */
+#about { background: var(--bg2); }
+
+.about-wrap {
+  display: grid; grid-template-columns: 240px 1fr; gap: 4rem; align-items: start;
+}
+
+.about-portrait {
+  width: 240px; height: 300px; border-radius: 18px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: sticky; top: 100px;
+}
+
+/* swap the portrait initials for a real photo: just add <img src="foto.jpg"> inside .about-portrait */
+.about-portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+.portrait-initials {
+  font-family: 'Fraunces', serif; font-size: 3.5rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.about-body p {
+  color: var(--text2); margin-bottom: 1.1rem; line-height: 1.85; font-size: .97rem;
+}
+.about-body p strong { color: var(--text); font-weight: 500; }
+
+/* language bars */
+.lang-section { margin-top: 2rem; }
+.lang-section h4 {
+  font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent3); margin-bottom: 1.1rem;
+}
+.lang-row { margin-bottom: .9rem; }
+.lang-top { display: flex; justify-content: space-between; font-size: .88rem; margin-bottom: 5px; }
+.lang-name { font-weight: 500; color: var(--text); }
+.lang-lvl { color: var(--text3); font-size: .78rem; }
+.lang-bar { height: 3px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.lang-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+/* ehrenamt */
+.ehrenamt {
+  margin-top: 2rem; padding: 1.2rem 1.5rem;
+  background: var(--bg3); border: 1px solid var(--border2); border-radius: 14px;
+  border-left: 3px solid var(--accent3);
+}
+.ehrenamt h3 {
+  font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent3); margin-bottom: 1rem;
+}
+.eh-item { display: flex; gap: 10px; font-size: .88rem; margin-bottom: .75rem; }
+.eh-item:last-child { margin-bottom: 0; }
+.eh-item > span { flex-shrink: 0; }
+.eh-item strong { color: var(--text); font-weight: 500; display: block; }
+.eh-item p { color: var(--text2); margin: 0; font-size: .82rem; }
+
+/* ── PROJECTS ── */
+#projects { background: var(--bg); }
+
+.filter-bar { display: flex; gap: .7rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.f-btn {
+  background: transparent; border: 1.5px solid var(--border2);
+  color: var(--text2); padding: .5rem 1.2rem; border-radius: 100px;
+  font-family: 'DM Sans', sans-serif; font-size: .85rem;
+  cursor: pointer; transition: all .2s;
+}
+.f-btn:hover { color: var(--text); border-color: var(--text3); }
+.f-btn.active-all  { background: var(--accent);  border-color: var(--accent);  color: #fff; }
+.f-btn.active-sw   { background: var(--blue);    border-color: var(--blue);    color: #fff; }
+.f-btn.active-hw   { background: var(--hw);      border-color: var(--hw);      color: #1a1000; }
+
+.proj-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.4rem;
+}
+
+.proj-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; overflow: hidden;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+  display: flex; flex-direction: column;
+}
+.proj-card:hover { transform: translateY(-7px); box-shadow: var(--shadow-lg); }
+.proj-card[data-cat="software"]:hover { border-color: rgba(96,128,245,.35); }
+.proj-card[data-cat="hardware"]:hover { border-color: rgba(240,160,80,.4); }
+
+.proj-img {
+  width: 100%; height: 190px;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.proj-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 1; }
+.proj-img-bg { position: absolute; inset: 0; z-index: 0; }
+.proj-img-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to bottom, rgba(0,0,0,.05) 0%, var(--card) 100%);
+}
+.proj-emoji { position: relative; z-index: 3; font-size: 3rem; filter: drop-shadow(0 4px 12px rgba(0,0,0,.4)); }
+.img-hint {
+  position: absolute; bottom: 10px; right: 10px; z-index: 4;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.15); border-radius: 100px;
+  padding: 3px 10px; font-size: .68rem; color: rgba(255,255,255,.6);
+  font-family: 'DM Mono', monospace; letter-spacing: .05em;
+}
+
+.proj-body { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: .85rem; }
+.tag { font-family: 'DM Mono', monospace; font-size: .68rem; padding: 3px 9px; border-radius: 100px; border: 1px solid; }
+.tag.sw { background: var(--sw-bg); border-color: rgba(96,128,245,.2); color: var(--blue); }
+.tag.hw { background: var(--hw-bg); border-color: rgba(240,160,80,.25); color: var(--hw); }
+.proj-name { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: .45rem; color: var(--text); }
+.proj-desc { color: var(--text2); font-size: .87rem; line-height: 1.7; flex: 1; margin-bottom: 1.2rem; }
+.proj-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .8rem; text-decoration: none; padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border2); color: var(--text2);
+  background: var(--bg3); transition: all .2s; align-self: flex-start;
+}
+.proj-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── SKILLS ── */
+#skills { background: var(--bg2); }
+
+.skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.sk-col { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; }
+.sk-col-head { display: flex; align-items: center; gap: 12px; margin-bottom: 1.6rem; padding-bottom: 1.3rem; border-bottom: 1px solid var(--border); }
+.sk-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.sk-icon.hw { background: var(--hw-bg); }
+.sk-icon.sw { background: var(--sw-bg); }
+.sk-col-title { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; }
+.sk-col-title.hw { color: var(--hw); }
+.sk-col-title.sw { color: var(--blue); }
+.sk-group-label { font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin: 1.1rem 0 .5rem; }
+.sk-tag { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 100px; margin: 3px; font-size: .8rem; border: 1px solid; cursor: default; transition: transform .2s; }
+.sk-tag:hover { transform: translateY(-2px); }
+.sk-tag.hw { background: var(--hw-bg); border-color: rgba(240,160,80,.22); color: var(--hw); }
+.sk-tag.sw { background: var(--sw-bg); border-color: rgba(96,128,245,.2); color: var(--blue); }
+
+/* ── MODULES ── */
+#modules { background: var(--bg); }
+.mod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .9rem; }
+.mod-card { background: var(--card2); border: 1px solid var(--border); border-radius: 14px; padding: 1.15rem 1.3rem; transition: all .25s; position: relative; overflow: hidden; }
+.mod-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+.mod-card:hover { transform: translateY(-4px); border-color: var(--border2); }
+.mod-card:hover::before { transform: scaleX(1); }
+.mod-icon { font-size: 1.15rem; margin-bottom: .55rem; }
+.mod-name { font-size: .88rem; font-weight: 500; color: var(--text); }
+.mod-type { font-size: .73rem; color: var(--text3); margin-top: 2px; }
+
+/* ── CERTS ── */
+#certs { background: var(--bg2); }
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: .9rem; }
+.cert-card { background: var(--card); border: 1px solid var(--border); border-radius: 13px; padding: 1.1rem 1.3rem; display: flex; align-items: flex-start; gap: 12px; transition: all .2s; }
+.cert-card:hover { border-color: var(--accent3); transform: translateY(-3px); }
+.cert-ico { width: 36px; height: 36px; flex-shrink: 0; border-radius: 9px; background: rgba(91,200,160,.1); border: 1px solid rgba(91,200,160,.2); display: flex; align-items: center; justify-content: center; font-size: .95rem; }
+.cert-name { font-weight: 500; font-size: .88rem; color: var(--text); margin-bottom: 2px; }
+.cert-src  { font-size: .75rem; color: var(--text3); }
+
+/* ── CONTACT ── */
+#contact { background: var(--bg); }
+.contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.contact-left p { color: var(--text2); margin-bottom: 2rem; line-height: 1.8; }
+.c-links { display: flex; flex-direction: column; gap: .8rem; }
+.c-link { display: flex; align-items: center; gap: 13px; padding: .95rem 1.15rem; background: var(--card); border: 1px solid var(--border); border-radius: 13px; text-decoration: none; color: var(--text); transition: all .2s; }
+.c-link:hover { border-color: var(--accent); transform: translateX(6px); }
+.c-link-ico { width: 34px; height: 34px; border-radius: 8px; background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: .95rem; flex-shrink: 0; }
+.c-link-text { font-size: .88rem; }
+.c-link-sub  { font-size: .75rem; color: var(--text3); }
+
+.contact-form { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; }
+.contact-form h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: .5rem; color: var(--text); }
+.contact-form .form-note { font-size: .8rem; color: var(--text3); margin-bottom: 1.5rem; }
+
+.fg { margin-bottom: 1rem; }
+label { display: block; font-size: .78rem; color: var(--text2); margin-bottom: .4rem; letter-spacing: .02em; }
+
+input, textarea, select {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 9px; padding: .72rem 1rem; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: .9rem;
+  outline: none; transition: border-color .2s, background .35s; resize: vertical;
+  -webkit-appearance: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+textarea { min-height: 115px; }
+
+.btn-send { width: 100%; background: var(--accent); color: #fff; border: none; padding: .88rem; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500; cursor: pointer; transition: all .2s; }
+.btn-send:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: .8rem; color: var(--text3); }
+footer em { color: var(--accent); font-style: normal; }
+
+/* ── ANIMATIONS ── */
+@keyframes up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  nav ul { display: none; }
+  nav { padding: 1rem 1.4rem; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-card { display: none; }
+  .about-wrap { grid-template-columns: 1fr; }
+  .about-portrait { width: 120px; height: 150px; position: static; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .container { padding: 0 1.2rem; }
+  section { padding: 4.5rem 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">T<em>.</em>D</a>
+  <ul>
+    <li><a href="#about">Über mich</a></li>
+    <li><a href="#projects">Projekte</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#modules">Studium</a></li>
+    <li><a href="#certs">Zertifikate</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+  </ul>
+  <button class="theme-btn" onclick="toggleTheme()">
+    <div class="theme-dot" id="tdot">🌙</div>
+    <span id="tlabel">Dunkel</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag">Embedded Software Engineering · Ingenieurinformatik THM</div>
+        <h1>
+          
+          <span class="italic">Thierry Florent</span><br>
+          Dzouato Djeumen
+        </h1>
+        <p class="hero-sub">
+          Leidenschaftlicher Ingenieurinformatikstudent mit Erfahrung in <strong>Full-Stack-Entwicklung</strong>,
+        <strong>eingebetteten Systemen</strong> und <strong>Datenbankarchitektur</strong>.
+        Ich entwickle Projekte, die Software und Hardware intelligent verbinden.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-fill">Projekte ansehen</a>
+          <a href="#contact" class="btn-ghost">Kontakt</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-stat">
+          <span class="hcs-num">7+</span>
+          <span class="hcs-label">EMBEDDED PROJEKTE</span>
+        </div>
+        <div class="hero-card-stat">
+          <span class="hcs-num">6+</span>
+          <span class="hcs-label">SOFTWARE PROJEKTE</span>
+        </div>
+        <div class="hero-card-stat">
+          <span class="hcs-num">3</span>
+          <span class="hcs-label">SPRACHEN</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-wrap">
+
+      <!-- FOTO links -->
+      <div class="reveal">
+        <div class="about-portrait">
+          <img src="Bild.jpeg" alt="Thierry">
+          
+        </div>
+      </div>
+
+      <!-- TEXT rechts -->
+      <div class="reveal">
+        <div class="s-eyebrow">Über mich</div>
+        <h2 class="s-title">Ingenieur.<br><em style="font-style:italic;color:var(--accent);font-weight:300;">Neugierig.</em> Präzise.</h2>
+
+        <div class="about-body">
+          <p>
+            Ich bin <strong>Thierry Florent Dzouato Djeumen</strong>, Ingenieurinformatikstudent
+            im 5. Semester an der Technischen Hochschule Mittelhessen in Gießen.
+            Geboren am 12. September 2003 in Bangangte, Kamerun.
+          </p>
+          <p>
+            Durch praktische Projekte im Studium konnte ich Kenntnisse sowohl in der
+            <strong>Softwareentwicklung</strong> (Full-Stack-Entwicklung) als auch in
+            <strong>hardwarenahen Systemen</strong> (AVR128DB48 Programmierung, Fahrerassistenzsysteme,
+            Industrie 4.0 und echtzeitfähige Systeme Grundkenntnisse) erwerben. Besonders fasziniert mich die
+            Schnittstelle zwischen beiden Welten.
+          </p>
+          <p>
+            Seit Juli 2024 arbeite ich bei ALDI SÜD, zunächst 1,5 Jahre in der Lagerlogistik (Headset-Systeme, Stückzahlkontrolle) und
+            seit 3 Monaten als studentische Aushilfe im Supermarkt. Dabei habe ich fundierte
+            praktische Einblicke in Warenflüsse, operative Prozessketten und standardisierte
+            Arbeitsabläufe sowie ein gutes Verständnis für effiziente Prozessorganisation entwickelt.
+          </p>
+          <p>
+            Als <strong>Kundenberater bei Boston Commercial Group Cameroon</strong> (2021–2023)
+            sammelte ich Erfahrung in mehrsprachiger Kommunikation, Beratung und
+            kundenorientiertem Arbeiten.
+          </p>
+        </div>
+
+        <!-- SPRACHEN -->
+        <div class="lang-section">
+          <h4>Sprachkenntnisse</h4>
+          <div class="lang-row">
+            <div class="lang-top"><span class="lang-name">Deutsch</span><span class="lang-lvl">C1 — Fließend · TestDaF</span></div>
+            <div class="lang-bar"><div class="lang-fill" style="width:88%"></div></div>
+          </div>
+          <div class="lang-row">
+            <div class="lang-top"><span class="lang-name">Englisch</span><span class="lang-lvl">Muttersprachlich · C2</span></div>
+            <div class="lang-bar"><div class="lang-fill" style="width:98%"></div></div>
+          </div>
+          <div class="lang-row">
+            <div class="lang-top"><span class="lang-name">Französisch</span><span class="lang-lvl">Muttersprachlich · C2</span></div>
+            <div class="lang-bar"><div class="lang-fill" style="width:98%"></div></div>
+          </div>
+        </div>
+
+        <!-- EHRENAMT -->
+        <div class="ehrenamt">
+          <h3>Ehrenamtliches Engagement</h3>
+          <div class="eh-item">
+            <span>🏀</span>
+            <div>
+              <strong>TSG Lollar Basketball</strong>
+              <p>Aktiver Vereinsspieler. Teamarbeit, Disziplin und soziale Integration vor Ort in Gießen.</p>
+            </div>
+          </div>
+          <div class="eh-item">
+            <span>🌍</span>
+            <div>
+              <strong>WUS: World University Service</strong>
+              <p>Soziales Engagement für internationale Studierende. Unterstützung bei Orientierung und Integration.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="s-eyebrow reveal">Eigene Arbeit</div>
+    <h2 class="s-title reveal">Projekte</h2>
+    <p class="s-sub reveal">
+      Von Embedded Systems mit dem AVR128DB48 Curiosity Nano bis Full-Stack-Webapplikationen und Systemsoftware in C99.
+      <!--<br><small style="color:var(--text3);font-size:.8rem;">💡 Screenshot einfügen: Kommentar in der Karte entfernen und Bildpfad anpassen.</small>-->
+    </p>
+
+    <div class="filter-bar reveal">
+      <button class="f-btn active-all" data-f="all"      onclick="filter('all',this)">Alle Projekte</button>
+      <button class="f-btn"            data-f="software" onclick="filter('software',this)">💻 Software</button>
+      <button class="f-btn"            data-f="hardware" onclick="filter('hardware',this)">🔧 Hardware(Embedded)</button>
+    </div>
+
+    <div class="proj-grid" id="pgrid">
+
+      <!-- SOFTWARE -->
+      <div class="proj-card reveal" data-cat="software">
+        <div class="proj-img">
+          <!-- <img src="screenshots/njvm.png" alt="NJVM"> -->
+           <img src="njvm.png" alt="NJVM">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#0c1436,#1a2060,#0c1436);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">⚙️</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag sw">C99</span><span class="tag sw">Stack-VM</span>
+            <span class="tag sw">Garbage Collection</span><span class="tag sw">BigIntLib Support</span>
+          </div>
+          <div class="proj-name">NJVM — Ninja Virtual Machine</div>
+          <p class="proj-desc">Vollständige Implementierung einer stack-basierten VM in C99. Eigenes Bytecode-Format, Stop-and-Copy Garbage Collection, Big-Integer-Arithmetik und OOP-Konstrukte — inkrementell über 9 Aufgaben entwickelt.</p>
+          <a href="https://github.com/ThierryD777/Ninja-Virtual-Machine-README/blob/main/README.md" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="software">
+        <div class="proj-img">
+          <!-- <img src="screenshots/simon.png" alt="Simon"> -->
+           <img src="simon.png" alt="Simon">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#0a2010,#0d3520,#0a2010);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">🎵</div>
+          
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag sw">Java</span><span class="tag sw">Vert.x</span>
+            <span class="tag sw">MQTT</span><span class="tag sw">MariaDB</span><span class="tag sw">Swagger UI</span>
+          </div>
+          <div class="proj-name">Simon-Spiel — Full-Stack</div>
+          <p class="proj-desc">Elektronisches Gedächtnisspiel mit vollständiger Full-Stack-Architektur. Java + Vert.x als Backend, MQTT für Echtzeit-Kommunikation, MariaDB zur Highscore-Speicherung, Swagger UI für die API-Dokumentation.</p>
+          <a href="https://github.com/ThierryD777/Simon-Multiplayer-Game/blob/main/README.md" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="software">
+        <div class="proj-img">
+          <!-- <img src="screenshots/tetris.png" alt="Tetris"> -->
+           <img src="tetris.png" alt="Tetris">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#100d30,#1e1860,#100d30);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">🎮</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag sw">HTML</span><span class="tag sw">CSS</span><span class="tag sw">JavaScript</span>
+          </div>
+          <div class="proj-name">Tetris-Spiel</div>
+          <p class="proj-desc">Browser-Implementierung von Tetris. Spiellogik mit Bewegung, Kollision und Rotation der Tetrominos in Vanilla JavaScript. Vollständige Reihen werden erkannt, entfernt und bepunktet.</p>
+          <a href="https://github.com/ThierryD777/Tetris-Game/tree/main" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="software">
+        <div class="proj-img">
+          <!-- <img src="screenshots/plotter.png" alt="Plotter"> -->
+           <img src="pan.png" alt="Plotter">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#1a0830,#300a50,#1a0830);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">📈</div>
+          <div class="img-hint"></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag sw">Java</span><span class="tag sw">JavaScript</span><span class="tag sw">LiveView</span>
+          </div>
+          <div class="proj-name">Funktionsplotter</div>
+          <p class="proj-desc">Terminal-basierter Funktionsplotter mit LiveView-Frontend. Interaktives Plotten von sin(x), log(x) u.v.m. — in Echtzeit im Browser via Java-Backend visualisiert.</p>
+          <a href="https://github.com/ThierryD777/Funktionsplotter-Java-JavaScript-" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="software">
+        <div class="proj-img">
+          <!-- <img src="screenshots/trainerdb.png" alt="Trainer DB"> -->
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#200808,#3a1010,#200808);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">🗄️</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag sw">Java</span><span class="tag sw">Vert.x</span>
+            <span class="tag sw">MariaDB</span><span class="tag sw">REST API</span>
+          </div>
+          <div class="proj-name">Trainer-Datenbank</div>
+          <p class="proj-desc">RESTful Backend-System zur Verwaltung von Trainerdaten. CRUD-Operationen, Routen-Design und Datenbankanbindung mit Vert.x und MariaDB.</p>
+          <a href="https://github.com/ThierryD777/Trainer-API-Datenbank" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="software">
+        <div class="proj-img">
+          <!-- <img src="screenshots/spiele.png" alt="Spiele"> -->
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#081820,#103040,#081820);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">♟️</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag sw">Java</span><span class="tag sw">LiveView</span>
+          </div>
+          <div class="proj-name">TicTacToe &amp; NimSpiel</div>
+          <p class="proj-desc">Klassische Spiele in Java mit interaktivem LiveView-Frontend. Spielstatus wird in Echtzeit zwischen Backend und Browser synchronisiert.</p>
+          <a href="https://github.com/FlorentDzouato" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="software">
+        <div class="proj-img">
+          <img src="calc.png" alt="Rechner">
+          <div class="proj-img-bg" style="background:linear-gradient(135deg,#0a1808,#122808,#0a1808);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">🧮</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag sw">HTML</span><span class="tag sw">CSS</span><span class="tag sw">JavaScript</span>
+          </div>
+          <div class="proj-name">Web-Taschenrechner</div>
+          <p class="proj-desc">Im Browser lauffähiger Taschenrechner in reinem HTML, CSS und JavaScript — ohne externe Bibliotheken.</p>
+          <a href="https://github.com/ThierryD777/Webbasierter-Taschenrechner" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <!-- HARDWARE -->
+      <div class="proj-card reveal" data-cat="hardware">
+        <div class="proj-img">
+          <!-- <img src="screenshots/led.jpg" alt="LED"> -->
+          <div class="proj-img-bg" style="background:radial-gradient(circle at 50% 60%, #3a2800, #1a1000);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">💡</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag hw">C</span><span class="tag hw">AVR128DB48</span>
+            <span class="tag hw">Microchip Studio</span><span class="tag hw">Port-Register</span>
+          </div>
+          <div class="proj-name">LED-Steuerung</div>
+          <p class="proj-desc">Digitale Ansteuerung von LEDs über die Port-Register des AVR128DB48. Konfiguration von Datenrichtungsregistern, Taktsteuerung und Schaltlogik auf Registerebene in C.</p>
+          <a href="https://github.com/ThierryD777/Hardware-Skills/tree/main/LEDs%20%26%20Buttons" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="hardware">
+        <div class="proj-img">
+          <!-- <img src="screenshots/lcd.jpg" alt="LCD"> -->
+          <div class="proj-img-bg" style="background:radial-gradient(circle at 50% 40%, #00282a, #001416);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">🖥️</div>
+        
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag hw">C</span><span class="tag hw">AVR128DB48</span>
+            <span class="tag hw">Microchip Studio</span><span class="tag hw">LCD</span>
+          </div>
+          <div class="proj-name">LCD-Steuerung</div>
+          <p class="proj-desc">Ansteuerung eines LCD-Displays zur Textausgabe auf dem AVR128DB48. Implementierung des Initialisierungsprotokolls und zeichenweiser Ausgabe. Direkte Registersteuerung in C, ohne externe Bibliotheken.</p>
+          <a href="https://github.com/ThierryD777/Hardware-Skills/tree/main/LCD-Ansteuerung" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="hardware">
+        <div class="proj-img">
+          <!-- <img src="screenshots/timer.jpg" alt="Timer"> -->
+          <div class="proj-img-bg" style="background:radial-gradient(circle at 50% 50%, #200028, #100014);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">⏱️</div>
+          
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag hw">C</span><span class="tag hw">AVR128DB48</span>
+            <span class="tag hw">Interrupts&Timer</span><span class="tag hw">ISR Behandlung</span>
+          </div>
+          <div class="proj-name">Interrupts &amp; Timer</div>
+          <p class="proj-desc">Konfiguration hardware-basierter Interrupts und Timer-Module des AVR128DB48. Präzise Zeitsteuerung und ereignisgetriebene Programmierung. ISR-Implementierung auf Registerebene in C mit Microchip Studio.</p>
+          <a href="https://github.com/ThierryD777/Hardware-Skills/tree/main/Interrupts%20%26%20Timer" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="hardware">
+        <div class="proj-img">
+          <!-- <img src="screenshots/servo.jpg" alt="Servo"> -->
+          <div class="proj-img-bg" style="background:radial-gradient(circle at 50% 50%, #002810, #001408);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">🔁</div>
+          
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag hw">C</span><span class="tag hw">AVR128DB48</span>
+            <span class="tag hw">PWM</span><span class="tag hw">Servomotor</span>
+          </div>
+          <div class="proj-name">Servomotor-Steuerung (PWM)</div>
+          <p class="proj-desc">Präzise Winkelsteuerung eines Servomotors über PWM-Signale. Timer-Register des AVR128DB48 zur Erzeugung variabler Pulsbreiten konfiguriert Vollständig in C mit Microchip Studio.</p>
+          <a href="https://github.com/ThierryD777/Hardware-Skills/tree/main/PWM(Pulsweiten%20Modulation)" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="hardware">
+        <div class="proj-img">
+          <!-- <img src="screenshots/adc.jpg" alt="ADC"> -->
+          <div class="proj-img-bg" style="background:radial-gradient(circle at 50% 50%, #281800, #141000);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">📡</div>
+          
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag hw">C</span><span class="tag hw">AVR128DB48</span>
+            <span class="tag hw">ADC</span><span class="tag hw">USART</span>
+            <span class="tag hw">I2C</span><span class="tag hw">Logic Analyser</span>
+          </div>
+          <div class="proj-name">ADC, USART &amp; I2C - Sensorik</div>
+          <p class="proj-desc">Auslesen analoger Sensoren (Potentiometer, Fotowiderstand) über den ADC des AVR128DB48, serielle Ausgabe via USART und I2C-Kommunikation mit einem Farbsensor. Signalanalyse mit dem Logic Analyser.</p>
+          <a href="https://github.com/ThierryD777/Hardware-Skills/tree/main/I2C" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="hardware">
+        <div class="proj-img">
+          <!-- <img src="screenshots/ir.jpg" alt="IR"> -->
+          <div class="proj-img-bg" style="background:radial-gradient(circle at 50% 50%, #100818, #080408);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">📻</div>
+          
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag hw">C</span><span class="tag hw">AVR128DB48</span>
+            <span class="tag hw">Infrarot</span><span class="tag hw">NEC-Protokoll</span><span class="tag hw">Timer-ISR</span>
+          </div>
+          <div class="proj-name">IR-Fernbedienung (Signalverarbeitung)</div>
+          <p class="proj-desc">Dekodierung von Infrarot-Signalen einer Fernbedienung mittels Timer-Interrupts auf dem AVR128DB48. Implementierung des NEC-Protokolls zur präzisen Erkennung und Verarbeitung der Steuerbefehle in C.</p>
+          <a href="https://github.com/ThierryD777/Hardware-Skills/tree/main/Signal%20Processing" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" data-cat="hardware">
+        <div class="proj-img">
+          <!-- <img src="screenshots/klavier.jpg" alt="Klavier"> -->
+          <div class="proj-img-bg" style="background:radial-gradient(circle at 50% 50%, #001820, #000c10);"></div>
+          <div class="proj-img-overlay"></div>
+          <div class="proj-emoji">🎹</div>
+          
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags">
+            <span class="tag hw">C</span><span class="tag hw">AVR128DB48</span>
+            <span class="tag hw">DAC</span><span class="tag hw">Sinuswelle</span><span class="tag hw">Audio</span>
+          </div>
+          <div class="proj-name">Elektronisches Klavier (DAC)</div>
+          <p class="proj-desc">Tonerzeugung durch DAC-Ausgabe berechneter Sinuswellen auf dem AVR128DB48. Vollständiges elektronisches Klavier mit Tastenerkennung und frequenzgenauer Tonwiedergabe. Digital/Analog-Konvertierung in C, Microchip Studio.</p>
+          <a href="https://github.com/ThierryD777/Hardware-Skills/tree/main/DAC" target="_blank" class="proj-link">⬡ GitHub ansehen</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="s-eyebrow reveal">Kompetenzen</div>
+    <h2 class="s-title reveal">Hardware &amp; Software</h2>
+    <p class="s-sub reveal">Embedded Systems mit AVR128DB48 und Microchip Studio — bis hin zu Full-Stack, Compilerbau und Systemsoftware.</p>
+    <div class="skills-grid reveal">
+      <div class="sk-col">
+        <div class="sk-col-head">
+          <div class="sk-icon hw">🔧</div>
+          <div class="sk-col-title hw">Hardware &amp; Embedded</div>
+        </div>
+        <div class="sk-group-label">Mikrocontroller &amp; Board</div>
+        <span class="sk-tag hw">AVR128DB48 Curiosity Nano</span>
+        <span class="sk-tag hw">Arduino Board</span>
+        <div class="sk-group-label">IDE &amp; Toolchain</div>
+        <span class="sk-tag hw">Microchip Studio</span>
+        <span class="sk-tag hw"> Arduino und VS Code</span>
+        <span class="sk-tag hw">Logic Analyser</span>
+        <div class="sk-group-label">Schnittstellen</div>
+        <span class="sk-tag hw">USART</span>
+        <span class="sk-tag hw">I2C</span>
+        <span class="sk-tag hw">SPI</span>
+        <span class="sk-tag hw">PWM</span>
+        <span class="sk-tag hw">ADC / DAC</span>
+        <span class="sk-tag hw">Infrarot (NEC)</span>
+        <span class="sk-tag hw">MQTT</span>
+        <div class="sk-group-label">Fachmodule</div>
+        <span class="sk-tag hw">Mikroprozessortechnik</span>
+        <span class="sk-tag hw">Betriebssysteme</span>
+        <span class="sk-tag hw">Industrie 4.0</span>
+        <span class="sk-tag hw">Fahrerassistenzsysteme</span>
+        <span class="sk-tag hw">Digitale Signalverarbeitung</span>
+        <span class="sk-tag hw">Technische Informatik</span>
+        <span class="sk-tag hw">Anwendung systemnäherer Konzepte in der Programmierung</span>
+      </div>
+      <div class="sk-col">
+        <div class="sk-col-head">
+          <div class="sk-icon sw">💻</div>
+          <div class="sk-col-title sw">Software &amp; Web</div>
+        </div>
+        <div class="sk-group-label">Programmiersprachen</div>
+        <span class="sk-tag sw">Java</span>
+        <span class="sk-tag sw">C </span>
+        <span class="sk-tag sw">C++</span>
+        <span class="sk-tag sw">JavaScript</span>
+        <span class="sk-tag sw">Python</span>
+        <span class="sk-tag sw">SQL</span>
+        <span class="sk-tag sw">R (Grundl.)</span>
+        <span class="sk-tag sw">React (Grundl.)</span>
+        <div class="sk-group-label">Web &amp; Frameworks</div>
+        <span class="sk-tag sw">HTML5 / CSS3</span>
+        <span class="sk-tag sw">Bootstrap</span>
+        <span class="sk-tag sw">Vert.x (Java)</span>
+        <span class="sk-tag sw">LiveViewProgramming</span>
+        <span class="sk-tag sw">React (Grundl.)</span>
+        <div class="sk-group-label">Datenbanken &amp; Tools</div>
+        <span class="sk-tag sw">MariaDB / MySQL</span>
+        <span class="sk-tag sw">Git / GitHub / GitLab</span>
+        <span class="sk-tag sw">Docker</span>
+        <span class="sk-tag sw">Swagger UI</span>
+        <span class="sk-tag sw">MS Office 365</span>
+        <div class="sk-group-label">Methoden</div>
+        <span class="sk-tag sw">Compilerbau / VM-Design</span>
+        <span class="sk-tag sw">Garbage Collection</span>
+        <span class="sk-tag sw">OOP</span>
+        <span class="sk-tag sw">Testautomatisierung</span>
+        <span class="sk-tag sw">Statistik &amp; Datenanalyse</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section id="modules">
+  <div class="container">
+    <div class="s-eyebrow reveal">Studium · THM Gießen</div>
+    <h2 class="s-title reveal">Vertiefung</h2>
+    <p class="s-sub reveal">Ingenieurinformatik 5. Semester — Technische Hochschule Mittelhessen</p>
+    <div class="mod-grid">
+      <div class="mod-card reveal"><div class="mod-icon">⚙️</div><div class="mod-name">Mikroprozessortechnik</div><div class="mod-type">AVR128DB48 · Register · Embedded C</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">🔨</div><div class="mod-name">Anwendung systemnäherer Konzepte in der Programmierung(C)</div><div class="mod-type">VM-Design · Bytecode · GC</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">🚗</div><div class="mod-name">Fahrerassistenzsysteme</div><div class="mod-type">Sensorik · Sicherheit · Regelung</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">🏭</div><div class="mod-name">Einf. Industrie 4.0 und Industrielle Steuerungssysteme</div><div class="mod-type">IoT · Vernetzung · Automatisierung</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">🖥️</div><div class="mod-name">Betriebssysteme</div><div class="mod-type">Linux · Prozesse · Scheduling</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">📡</div><div class="mod-name">Digitale Signalverarbeitung</div><div class="mod-type">Filter · Frequenzanalyse · DSP</div></div>
+      
+      
+      <!--<div class="mod-card reveal"><div class="mod-icon">🗄️</div><div class="mod-name">Programmierung(Java)</div><div class="mod-type">SQL · MariaDB · Modellierung</div></div>-->
+      
+      <div class="mod-card reveal"><div class="mod-icon">🧮</div><div class="mod-name">Algorithmen &amp; Datenstrukturen</div><div class="mod-type">Komplexität · Graphen · Suche</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">📐</div><div class="mod-name">Mathematik</div><div class="mod-type">Analysis · LinAlg · Statistik</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">🔌</div><div class="mod-name">Elektrotechnik &amp; Elektronik</div><div class="mod-type">Schaltungen · Signale</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">☕</div><div class="mod-name">Softwareentwicklung (Java)</div><div class="mod-type">OOP · Patterns · Testing</div></div>
+      <div class="mod-card reveal"><div class="mod-icon">🌐</div><div class="mod-name">Webentwicklung</div><div class="mod-type">HTML · CSS · JavaScript</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs">
+  <div class="container">
+    <div class="s-eyebrow reveal">Weiterbildung</div>
+    <h2 class="s-title reveal">Zertifikate</h2>
+    <p class="s-sub reveal">Eigenständig erworbene Qualifikationen neben dem Studium.</p>
+    <div class="cert-grid">
+      <div class="cert-card reveal"><div class="cert-ico">🇩🇪</div><div><div class="cert-name">TestDaF — Deutsch C1</div><div class="cert-src">Test Deutsch als Fremdsprache</div></div></div>
+      <div class="cert-card reveal"><div class="cert-ico">⚡</div><div><div class="cert-name">C Programming Foundations</div><div class="cert-src">Linkedln Learning</div></div></div>
+      <div class="cert-card reveal"><div class="cert-ico">🐍</div><div><div class="cert-name">Complete Guide C++ Programming</div><div class="cert-src">Linkedln Learning</div></div></div>
+      <div class="cert-card reveal"><div class="cert-ico">⚛️</div><div><div class="cert-name">React Essential Training</div><div class="cert-src">Linkedln Learning</div></div></div>
+      <div class="cert-card reveal"><div class="cert-ico">🌐</div><div><div class="cert-name">HTML, CSS &amp; JavaScript — Building the Web</div><div class="cert-src">Linkedln Learning</div></div></div>
+      <div class="cert-card reveal"><div class="cert-ico">☁️</div><div><div class="cert-name">Learning Microsoft 365</div><div class="cert-src">Linkedln Learning</div></div></div>
+      <div class="cert-card reveal"><div class="cert-ico">🤖</div><div><div class="cert-name">Prompt Engineering — Generative AI</div><div class="cert-src">Linkedln Learning</div></div></div>
+      <div class="cert-card reveal"><div class="cert-ico">🐍</div><div><div class="cert-name">Vertiefung mit Python</div><div class="cert-src">Linkedln Learning</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap">
+      <div class="reveal">
+        <div class="s-eyebrow">Kontakt</div>
+        <h2 class="s-title">Lass uns<br>zusammenarbeiten.</h2>
+        <p class="contact-left" style="color:var(--text2); margin-bottom:2rem; line-height:1.8;">
+          Offen für Werkstudentenstellen, Praktika und spannende Projekte.
+          Ich antworte auf Deutsch, Englisch oder Französisch.
+        </p>
+        <div class="c-links">
+          <a href="mailto:thierrydbspace@gmail.com" class="c-link">
+            <div class="c-link-ico">✉️</div>
+            <div><div class="c-link-text">thierrydbspace@gmail.com</div><div class="c-link-sub">E-Mail — bevorzugter Kontaktweg</div></div>
+          </a>
+          <a href="tel:+4915560656902" class="c-link">
+            <div class="c-link-ico">📞</div>
+            <div><div class="c-link-text">+49 155 60 656 902</div><div class="c-link-sub">Telefon</div></div>
+          </a>
+          <a href="https://github.com/ThierryD777/Funktionsplotter-Java-JavaScript-" target="_blank" class="c-link">
+            <div class="c-link-ico">⬡</div>
+            <div><div class="c-link-text">github.com/FlorentDzouato</div><div class="c-link-sub">GitHub</div></div>
+          </a>
+          <a href="https://www.linkedin.com/in/thierry-florent-dzouato-djeumen-375438332/?skipRedirect=true" target="_blank" class="c-link">
+            <div class="c-link-ico">💼</div>
+            <div><div class="c-link-text">linkedin.com/in/ThierryD</div><div class="c-link-sub">LinkedIn</div></div>
+          </a>
+          <div class="c-link" style="cursor:default;">
+            <div class="c-link-ico">📍</div>
+            <div><div class="c-link-text">Unterhof 67, 35392 Gießen</div><div class="c-link-sub">Adresse</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT FORM — sendet echte E-Mail via mailto -->
+      <div class="contact-form reveal">
+        <h3>Nachricht senden</h3>
+        <p class="form-note">Das Formular öffnet deinen E-Mail-Client mit vorausgefüllter Nachricht.</p>
+        <div class="fg"><label for="cf-name">Dein Name</label><input id="cf-name" type="text" placeholder="Max Mustermann"></div>
+        <div class="fg"><label for="cf-email">Deine E-Mail</label><input id="cf-email" type="email" placeholder="max@beispiel.de"></div>
+        <div class="fg">
+          <label for="cf-subject">Betreff</label>
+          <select id="cf-subject">
+            <option value="">— Bitte wählen —</option>
+            <option value="Werkstudentenstelle">Werkstudentenstelle</option>
+            <option value="Praktikumsanfrage">Praktikumsanfrage</option>
+            <option value="Projektanfrage">Projektanfrage</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+        </div>
+        <div class="fg"><label for="cf-msg">Nachricht</label><textarea id="cf-msg" placeholder="Deine Nachricht an Thierry..."></textarea></div>
+        <button class="btn-send" onclick="sendMail()">Nachricht senden →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <em>Thierry Florent Dzouato Djeumen</em> — Ingenieurinformatik · THM Gießen · Verfügbar für Werkstudium &amp; Praktikum</p>
+</footer>
+
+<script>
+// THEME
+function toggleTheme() {
+  const h = document.documentElement;
+  const next = h.dataset.theme === 'dark' ? 'light' : 'dark';
+  h.dataset.theme = next;
+  document.getElementById('tdot').textContent   = next === 'light' ? '☀️' : '🌙';
+  document.getElementById('tlabel').textContent = next === 'light' ? 'Hell' : 'Dunkel';
+  localStorage.setItem('td-theme', next);
+}
+const saved = localStorage.getItem('td-theme');
+if (saved) {
+  document.documentElement.dataset.theme = saved;
+  document.getElementById('tdot').textContent   = saved === 'light' ? '☀️' : '🌙';
+  document.getElementById('tlabel').textContent = saved === 'light' ? 'Hell' : 'Dunkel';
+}
+
+// FILTER
+function filter(cat, btn) {
+  document.querySelectorAll('.proj-card').forEach(c => {
+    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'flex' : 'none';
+  });
+  document.querySelectorAll('.f-btn').forEach(b => b.className = 'f-btn');
+  btn.classList.add('active-' + cat);
+}
+
+// SCROLL REVEAL
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 55);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// NAV ACTIVE
+const secs = document.querySelectorAll('section[id]');
+const nls  = document.querySelectorAll('nav a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (scrollY >= s.offsetTop - 130) cur = s.id; });
+  nls.forEach(a => { a.style.color = a.hash === '#' + cur ? 'var(--text)' : ''; });
+});
+
+// CONTACT FORM — echter mailto
+function sendMail() {
+  const name    = document.getElementById('cf-name').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const subject = document.getElementById('cf-subject').value;
+  const msg     = document.getElementById('cf-msg').value.trim();
+  const btn     = document.querySelector('.btn-send');
+
+  if (!name || !email || !subject || !msg) {
+    btn.textContent = '⚠ Bitte alle Felder ausfüllen';
+    setTimeout(() => btn.textContent = 'Nachricht senden →', 2200);
+    return;
+  }
+
+  const body = `Hallo Thierry,%0A%0AMein Name ist ${encodeURIComponent(name)} (${encodeURIComponent(email)}).%0A%0A${encodeURIComponent(msg)}%0A%0AMit freundlichen Grüßen%0A${encodeURIComponent(name)}`;
+  window.location.href = `mailto:thierrydbspace@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+  btn.textContent = '✓ E-Mail-Client wird geöffnet…';
+  btn.style.background = 'var(--accent3)';
+  setTimeout(() => { btn.textContent = 'Nachricht senden →'; btn.style.background = ''; }, 3500);
+}
+</script>
+</body>
+</html>
